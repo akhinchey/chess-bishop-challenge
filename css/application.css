@@ -1,0 +1,95 @@
+/* *       - https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors
+/* :after  - https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Aafter*/
+/* :before - https://developer.mozilla.org/en-US/docs/Web/CSS/%3A%3Abefore */
+*, *:after, *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 14px;
+  padding-bottom: 4em;
+}
+
+ header {
+  color: #2d425c;
+ }
+
+ header h1 {
+  font-size: 3em;
+ }
+
+ main section {
+  padding: 2em 0;
+ }
+
+  main section:first-of-type {
+    padding-top: 0;
+  }
+
+  main section:last-of-type {
+    padding-bottom: 0;
+  }
+
+ .center-text {
+  text-align: center;
+ }
+
+.cell{
+  display: block;
+  width: 20%;
+  float: left;
+  height: 0;
+  padding-bottom: 20%;
+  background-color: #e3e3e3;
+  margin: 0;
+}
+
+.dark {
+  background-color: #AAA;
+}
+
+.cells {
+  margin: 0 auto;
+  padding: 0;
+  overflow: auto;
+  width: 100%;
+ }
+
+.white-bishop, .black-bishop {
+  height: 135px;
+  vertical-align: middle;
+  padding: 10px;
+  margin: auto;
+}
+
+.container {
+    margin: 0 auto;
+    overflow: auto;
+    width: 100%;
+    max-width: 700px;
+    padding: 0 1em;
+}
+
+.winner-message {
+  font-size: 1.65em;
+  padding: 0;
+  color: green;
+  display: none;
+}
+
+.logo {
+  width: 150px;
+  display: inline;
+  vertical-align: middle;
+}
+
+.title {
+  display: inline;
+  vertical-align: middle;
+}
+
+.target {
+  background: green;
+}

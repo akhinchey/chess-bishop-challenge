@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <link rel="stylesheet" href="css/normalize.css">
+ <link rel="stylesheet" href="css/application.css">
+ <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<!--  // <script type="text/javascript" src="js/application.js"></script> -->
+
+<script>
+
+function dragstart_handler(ev) {
+ console.log("dragStart");
+ ev.dataTransfer.setData("text", ev.target.id);
+ console.log(ev.target);
+ var diags = $(ev.target).parent().attr("class").split(" ");
+ var rightDiag = diags.pop();
+ var leftDiag = diags.pop();
+ var possibleMoves = $("." + rightDiag + ", ." + leftDiag)
+
+ if (ev.target.id.includes("black")) {
+    var opposingClass = "white-bishop";
+    var sameSquares = $(".black-bishop").parent();
+ } else {
+    var opposingClass = "black-bishop";
+    var sameSquares = $(".white-bishop").parent();
+ }
+
+ var opposingSquares = $("." + opposingClass).parent();
+ var classes = $.map(opposingSquares, function(obj) { return obj.className });
+
+ var finalClasses = [];
+
+ for (var i =0; i < classes.length; i++) { 
+    var x = classes[i].split(" "); 
+    finalClasses.push(x.pop()); 
+    finalClasses.push(x.pop()); 
+    }
+
+var classString = "." + finalClasses.join(", .")
+var blockedCells = $(classString);
+
+var finalMoves = $.grep( possibleMoves, function(cell) { return $.inArray(cell, blockedCells) < 0; });
+
+$(finalMoves).addClass("target")
+$(sameSquares).removeClass("target")
+
+ // debugger;
+ ev.effectAllowed = "move";
+}
+
+function dragover_handler(ev) {
+ console.log("dragOver");
+ ev.preventDefault();
+}
+
+function drop_handler(ev) {
+  console.log("Drop");
+  ev.preventDefault();
+  var id = ev.dataTransfer.getData("text");
+  var className = $(document.getElementById(id)).attr("class")
+  // debugger;
+  if ( $(ev.target).attr("class").includes("target") )
+    ev.target.appendChild(document.getElementById(id));
+    $(".target").removeClass("target");
+}
+
+function dragend_handler(ev) {
+  console.log("dragEnd");
+  // Remove all of the drag data
+  ev.dataTransfer.clearData();
+}
+</script>
+
+<!-- finalClasses =[]
+[]
+for (var i =0; i < classes.length; i++) { var x = classes[i].split(" "); finalClasses.push(x.pop()); finalClasses.push(x.pop()); }
+8
+finalClasses
+["rd8", "ld5", "rd7", "ld6", "rd6", "ld7", "rd5", "ld8"] -->
+
+<!-- $.map(squares, function(obj) { return obj.className })
+["cell dark ld5 rd8", "cell ld6 rd7", "cell dark ld7 rd6", "cell ld8 rd5"] -->
+
+  <title></title>
+</head>
+
+<body>
+  <header class="container center-text">
+    <h1 class="title"> Chess Bishop Challenge</h1>
+  </header>
+
+  <main role="main" class="container">
+
+    <section>
+      <ul class="cells">
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell ld4 rd1"><img id="black1" draggable="true" ondragstart="dragstart_handler(event);" class="black-bishop" src="images/black-bishop.png"></li>
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell dark ld5 rd2"></li>
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell ld6 rd3"></li>
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell dark ld7 rd4"></li>
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell ld8 rd5"><img id="white1" draggable="true" ondragstart="dragstart_handler(event);" class="white-bishop" src="images/white-bishop.png"></li>
+
+
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell dark ld3 rd2"><img id="black2" draggable="true" ondragstart="dragstart_handler(event);" class="black-bishop" src="images/black-bishop.png"></li>
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell ld4 rd3"></li>
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell dark ld5 rd4"></li>
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell ld6 rd5"></li>
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell dark ld7 rd6"><img id="white2" draggable="true" ondragstart="dragstart_handler(event);" class="white-bishop" src="images/white-bishop.png"></li>
+
+
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell ld2 rd3"><img id="black3" draggable="true" ondragstart="dragstart_handler(event);" class="black-bishop" src="images/black-bishop.png"></li>
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell dark ld3 rd4"></li>
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell ld4 rd5"></li>
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell dark ld5 rd6"></li>
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell ld6 rd7"><img id="white3" draggable="true" ondragstart="dragstart_handler(event);" class="white-bishop" src="images/white-bishop.png"></li>
+
+
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell dark ld1 rd4"><img id="black4" draggable="true" ondragstart="dragstart_handler(event);" class="black-bishop" src="images/black-bishop.png"></li>
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell ld2 rd5"></li>
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell dark ld3 rd6"></li>
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell ld4 rd7"></li>
+
+        <li ondrop="drop_handler(event);" ondragover="dragover_handler(event);" class="cell dark ld5 rd8"><img id="white4" draggable="true" ondragstart="dragstart_handler(event);" class="white-bishop" src="images/white-bishop.png"></li>
+
+
+        
+      </ul>
+    </section>
+
+<!--     <div class="center-text winner-message">
+      <h2>Congratulations, You've Won!</h2>
+      <span>Refresh the page to play again.</span>
+    </div> -->
+
+  </main>
+
+</body>
+</html>
